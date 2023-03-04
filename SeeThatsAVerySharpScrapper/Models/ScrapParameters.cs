@@ -2,7 +2,7 @@
 {
     public class ScrapParameters
     {
-        public string? Url { get; set; }
-        public List<string>? CssSelectors { get; set; }
+        public List<string> Urls { get; set; } = new();
+        public Dictionary<string, string> CssSelectors { get; set; } = new();
     }
 }
