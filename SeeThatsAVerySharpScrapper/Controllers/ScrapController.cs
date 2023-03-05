@@ -18,9 +18,9 @@ namespace SeeThatsAVerySharpScrapper.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> ScrapWebsites([FromBody] ScrapParameters scrapParameters)
+        public async Task<IActionResult> ScrapWebsites([FromBody] ScrapParameters requestParameters)
         {
-            var result = await _mediator.Send(new GetDataBasedOnCssSelectorsQuery(scrapParameters));
+            var result = await _mediator.Send(new GetDataBasedOnCssSelectorsQuery(requestParameters));
 
             return Ok(result);
         }

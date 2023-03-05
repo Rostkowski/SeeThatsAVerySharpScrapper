@@ -12,18 +12,18 @@ namespace SeeThatsAVerySharpScrapper.Queries.GetDataBasedOnCssSelectors
         {
             HttpClient client = new();
 
-            var data = new List<Dictionary<string, string>>();
+            var data = new List<Dictionary<string, string?>>();
 
             foreach (var url in request.Parameters.Urls)
             {
                 var result = await client.GetStreamAsync(url, cancellationToken);
                 var document = await BrowsingContext.New().OpenAsync(m => m.Content(result), cancellationToken);
 
-                var currentPageExtractedSelectors = new Dictionary<string, string>();
+                var currentPageExtractedSelectors = new Dictionary<string, string?>();
 
                 foreach (var selector in request.Parameters.CssSelectors)
                 {
-                    var scrapedSelectorValue = document.QuerySelector(selector.Value)!.TextContent;
+                    var scrapedSelectorValue = document.QuerySelector(selector.Value)?.TextContent;
                     currentPageExtractedSelectors.Add(selector.Key, scrapedSelectorValue);
                 }
 

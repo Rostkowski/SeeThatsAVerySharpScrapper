@@ -2,6 +2,6 @@
 {
     public class ScrapedDataViewModel
     {
-        public List<Dictionary<string, string>> ScrapedData { get; set; } = new();
+        public List<Dictionary<string, string?>> ScrapedData { get; set; } = new();
     }
 }
