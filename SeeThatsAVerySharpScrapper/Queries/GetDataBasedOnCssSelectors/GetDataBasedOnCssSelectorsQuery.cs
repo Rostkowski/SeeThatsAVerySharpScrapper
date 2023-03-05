@@ -16,18 +16,25 @@ namespace SeeThatsAVerySharpScrapper.Queries.GetDataBasedOnCssSelectors
 
             foreach (var url in request.Parameters.Urls)
             {
-                var result = await client.GetStreamAsync(url, cancellationToken);
-                var document = await BrowsingContext.New().OpenAsync(m => m.Content(result), cancellationToken);
-
-                var currentPageExtractedSelectors = new Dictionary<string, string?>();
-
-                foreach (var selector in request.Parameters.CssSelectors)
+                try
                 {
-                    var scrapedSelectorValue = document.QuerySelector(selector.Value)?.TextContent;
-                    currentPageExtractedSelectors.Add(selector.Key, scrapedSelectorValue);
-                }
+                    var result = await client.GetStreamAsync(url, cancellationToken);
+                    var document = await BrowsingContext.New().OpenAsync(m => m.Content(result), cancellationToken);
 
-                data.Add(currentPageExtractedSelectors);
+                    var currentPageExtractedSelectors = new Dictionary<string, string?>();
+
+                    foreach (var selector in request.Parameters.CssSelectors)
+                    {
+                        var scrapedSelectorValue = document.QuerySelector(selector.Value)?.TextContent;
+                        currentPageExtractedSelectors.Add(selector.Key, scrapedSelectorValue);
+                    }
+
+                    data.Add(currentPageExtractedSelectors);
+                }
+                catch (Exception ex)
+                {
+                    continue;
+                }
             }
 
             return new ScrapedDataViewModel()
