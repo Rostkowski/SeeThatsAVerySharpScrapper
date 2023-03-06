@@ -19,7 +19,10 @@ namespace SeeThatsAVerySharpScrapper.Queries.GetDataBasedOnCssSelectors
                 try
                 {
                     var result = await client.GetStreamAsync(url, cancellationToken);
-                    var document = await BrowsingContext.New().OpenAsync(m => m.Content(result), cancellationToken);
+                    var document = await BrowsingContext
+                        .New()
+                        .OpenAsync(m => m
+                            .Content(result), cancellationToken);
 
                     var currentPageExtractedSelectors = new Dictionary<string, string?>();
 
